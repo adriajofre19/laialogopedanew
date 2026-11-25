@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const sections = [
+  {
+    title: 'Què són les cookies?',
+    paragraphs: [
+      'Les cookies són petits fitxers d’informació que s’emmagatzemen al dispositiu de l’usuari quan visita un lloc web. Permeten recordar determinada informació i facilitar el funcionament dels serveis oferts.',
+      'A més de les cookies, aquest lloc web pot utilitzar emmagatzematge local del navegador per a finalitats similars, com ara recordar les preferències de visualització o de consentiment.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Tipus de cookies',
+    paragraphs: [],
+    items: [
+      'Cookies tècniques o necessàries: permeten la navegació i el funcionament dels serveis i funcionalitats del lloc web.',
+      'Cookies de personalització: permeten recordar preferències o característiques de la navegació.',
+      'Cookies d’anàlisi o mesurament: permeten obtenir informació sobre l’ús del lloc web per analitzar-ne el funcionament i introduir-hi millores.',
+      'Cookies publicitàries o de seguiment: permeten gestionar continguts publicitaris o recopilar informació sobre els hàbits de navegació.',
+    ],
+  },
+  {
+    title: 'Cookies utilitzades en aquest lloc web',
+    paragraphs: [
+      'Aquest lloc web no activa cookies publicitàries ni de seguiment propi. Emmagatzema únicament les preferències de consentiment indicades per l’usuari.',
+    ],
+    items: [
+      'laia-cookie-preferences: emmagatzematge local del navegador, categoria tècnica o de preferències, durada d’un any. Desa la configuració de cookies seleccionada.',
+    ],
+  },
+  {
+    title: 'Serveis de tercers',
+    paragraphs: [
+      'Algunes pàgines poden carregar continguts incrustats, com ara el mapa de Google Maps o les xarxes socials. Aquests serveis poden establir les seves pròpies cookies segons la seva política, sobre la qual aquest lloc web no té control directe.',
+      'Pots consultar més informació sobre la gestió de cookies a les polítiques de Google, LinkedIn i Instagram.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Consentiment i modificació de les preferències',
+    paragraphs: [
+      'Les cookies estrictament necessàries es poden utilitzar sense consentiment previ en els supòsits permesos per la normativa aplicable. La resta de finalitats requereixen el consentiment de l’usuari.',
+      'Pots acceptar, rebutjar o modificar les preferències en qualsevol moment des del sistema de configuració del lloc web. La retirada del consentiment no afecta la licitud del tractament realitzat anteriorment.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Configuració del navegador i actualització',
+    paragraphs: [
+      'També pots restringir, bloquejar o eliminar cookies mitjançant la configuració del navegador. Els procediments varien segons el navegador utilitzat.',
+      'Aquesta política es pot actualitzar quan canviïn les cookies utilitzades, les seves finalitats o la normativa aplicable. Es recomana consultar-la periòdicament.',
+    ],
+    items: [],
+  },
+];
+---
+<Layout title="Política de cookies | Laia Carbonell Renart" description="Política de cookies del lloc web de Laia Carbonell Renart, logopeda.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Legal</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Política de cookies</h1>
+    <p class="mt-5 max-w-3xl leading-relaxed text-ink/75">Aquesta política explica què són les cookies, quines s’utilitzen en aquest lloc web i com pots gestionar-ne les preferències.</p>
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
+      {sections.map((section) => (
+        <article class="card p-6 sm:p-7">
+          <h2 class="font-display text-xl font-bold text-ink">{section.title}</h2>
+          <div class="mt-3 space-y-3 text-[15px] leading-relaxed text-ink/75">
+            {section.paragraphs.map((p) => <p>{p}</p>)}
+            {section.items.length > 0 && <ul class="space-y-2">{section.items.map((item) => <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span><span>{item}</span></li>)}</ul>}
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="mt-8 card flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h2 class="font-display text-xl font-bold text-ink">Gestiona les teves preferències</h2>
+        <p class="mt-1 text-sm text-ink/70">Pots revisar i modificar el consentiment en qualsevol moment.</p>
+      </div>
+      <a href="/preferencies-de-cookies" class="inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark">Preferències de cookies</a>
+    </div>
+  </main>
+  <Footer />
+</Layout>

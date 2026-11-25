@@ -1,0 +1,73 @@
+---
+const trainingLogos = [
+  { src: '/images/pwimg-1600/logoautonomablanc.png', alt: 'Universitat Autònoma de Barcelona' },
+  { src: '/images/pwimg-1600/logoblanquernablanc.png', alt: 'Blanquerna, Universitat Ramon Llull' },
+  { src: '/images/pwimg-1600/logo-umanresa-uvic-ucc-neg.png', alt: 'UManresa' },
+];
+---
+<section class="section-pad bg-mist/60 pt-32 md:pt-36">
+  <div class="container-shell">
+    <div class="reveal">
+      <span class="eyebrow">Laia Logopeda</span>
+      <h1 class="section-title">Sobre mi</h1>
+    </div>
+
+    <div class="mt-12 grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
+      <div class="reveal">
+        <h2 class="font-display text-3xl font-bold text-ink sm:text-4xl">Laia Carbonell Renart</h2>
+        <p class="mt-5 text-[15px] leading-relaxed text-ink/75">
+          Em dic Laia Carbonell Renart i soc d’El Far d’Empordà. Soc logopeda i estic col·legiada (núm. 4962) pel Col·legi de Logopedes de Catalunya. M’encanta la meva feina perquè em permet facilitar la comunicació de les persones.
+          <strong class="font-semibold text-ink">Considero que la comunicació efectiva és essencial i la vida és molt més senzilla si podem comunicar allò que sentim.</strong>
+        </p>
+        <a href="/serveis" class="mt-7 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-brand-dark">Consulta els serveis <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+      </div>
+      <div class="reveal relative">
+        <div class="relative overflow-hidden rounded-[2rem] border border-white/80 bg-brand p-3 shadow-card">
+          <div class="absolute inset-0 bg-[url('/images/pwimg-1100/img-4182-1.jpg')] bg-cover bg-center opacity-20" aria-hidden="true"></div>
+          <img src="/images/pwimg-1600/img-4246-stjulia-1-2.png" alt="Laia Carbonell Renart, logopeda" class="relative h-[420px] w-full rounded-[1.5rem] object-cover object-top sm:h-[520px]" width="1600" height="2186" loading="eager" decoding="async" />
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal relative mt-16 overflow-hidden rounded-[2rem] bg-brand px-6 py-12 text-center text-white shadow-card sm:px-12">
+      <div class="absolute inset-0 bg-[url('/images/pwimg-2560/img-4168.jpg')] bg-cover bg-center opacity-20" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-3xl">
+        <h2 class="font-display text-3xl font-bold sm:text-4xl">La meva formació</h2>
+        <p class="mt-5 leading-relaxed text-white/85">
+          Em vaig graduar en logopèdia a la <strong class="font-semibold text-white">Universitat Autònoma de Barcelona</strong>, obtenint el <strong class="font-semibold text-white">premi extraordinari de la titulació</strong>. A nivell d’especialització, vaig cursar el <strong class="font-semibold text-white">diploma d’especialització universitari en intervenció logopèdica en trastorns de la veu</strong> a Blanquerna, Universitat Ramon Llull, i, actualment, estic cursant el <strong class="font-semibold text-white">màster en motricitat orofacial</strong> a UManresa.
+        </p>
+        <div class="mt-10 grid items-center gap-6 sm:grid-cols-3">
+          {trainingLogos.map((logo) => (
+            <div class="flex h-24 items-center justify-center rounded-2xl bg-white/10 p-4 backdrop-blur-sm">
+              <img src={logo.src} alt={logo.alt} class="max-h-full w-full object-contain" width="1600" height="733" loading="lazy" decoding="async" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal card mt-10 p-6 sm:p-8">
+      <p class="mx-auto max-w-4xl text-center text-[15px] leading-relaxed text-ink/75">
+        Compagino la meva feina a l’espai de <strong class="font-semibold text-ink">coworking CINER, de Sant Julià de Ramis,</strong> amb el treball al <strong class="font-semibold text-ink">centre privat de logopèdia de l’Emma Pont, a Figueres</strong>. A més, realitzo el servei de logopèdia a l’escola Montessori de Figueres i a l’escola Doctor Masmitjà de Girona. També he treballat a la Unitat d’Estimulació Neurològica (UEN), a l’Institut Guttmann de Badalona (pràctiques), i a l’Escola Clínica de Neuropsicologia i Patologia del Llenguatge (ECNPL) de l’Hospital de la Santa Creu i Sant Pau de Barcelona (pràctiques).
+      </p>
+    </div>
+
+    <div class="mt-16 grid items-center gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+      <div class="reveal text-center lg:text-left">
+        <h2 class="font-display text-3xl font-bold text-brand">Sant Julià de Ramis</h2>
+        <p class="mt-3 text-[15px] text-ink/75">Em trobaràs al coworking <strong class="font-semibold text-ink">CINER</strong></p>
+      </div>
+      <div class="reveal">
+        <img src="/images/img-1280-720/img-4122-stjulia.jpg" alt="Espai de coworking CINER a Sant Julià de Ramis" class="h-72 w-full rounded-[1.5rem] object-cover shadow-card sm:h-96" width="1280" height="720" loading="lazy" decoding="async" />
+      </div>
+    </div>
+
+    <div class="reveal relative mt-16 overflow-hidden rounded-[1.75rem] bg-brand px-8 py-12 text-center text-white shadow-soft">
+      <div class="absolute inset-0 bg-[url('/images/pwimg-1100/img-4317.jpg')] bg-cover bg-center opacity-20" aria-hidden="true"></div>
+      <div class="relative">
+        <p class="font-display text-3xl font-bold">Contacta sense compromís</p>
+        <a href="/contacte" class="mt-6 inline-flex rounded-full border border-white/70 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white hover:text-brand">Contacta</a>
+      </div>
+    </div>
+  </div>
+</section>

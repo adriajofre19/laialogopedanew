@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { services } from '../data/services';
+
+const mainPages = [
+  { href: '/', label: 'Inici' },
+  { href: '/sobre-mi', label: 'Sobre mi' },
+  { href: '/serveis', label: 'Serveis' },
+  { href: '/faqs', label: 'FAQS' },
+  { href: '/contacte', label: 'Contacte' },
+];
+const servicePages = services.map((service) => ({ href: `/serveis/${service.slug}`, label: service.title }));
+const legalPages = [
+  { href: '/avis-legal', label: 'Avís legal' },
+  { href: '/privacitat', label: 'Política de privacitat' },
+  { href: '/politica-de-cookies', label: 'Política de cookies' },
+  { href: '/preferencies-de-cookies', label: 'Preferències de cookies' },
+  { href: '/mapa-web', label: 'Mapa web' },
+  { href: '/accessibilitat', label: 'Accessibilitat' },
+];
+const groups = [
+  { title: 'Navegació principal', pages: mainPages },
+  { title: 'Serveis', pages: servicePages },
+  { title: 'Informació legal', pages: legalPages },
+];
+---
+<Layout title="Mapa web | Laia Carbonell Renart" description="Mapa web de laialogopeda.com amb tots els enllaços del lloc web.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Informació</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Mapa web</h1>
+    <p class="mt-5 max-w-3xl leading-relaxed text-ink/75">Aquí trobaràs tots els enllaços del lloc web de Laia Carbonell Renart.</p>
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
+      {groups.map((group) => (
+        <article class="card p-6 sm:p-7">
+          <h2 class="font-display text-xl font-bold text-ink">{group.title}</h2>
+          <ul class="mt-4 space-y-3">
+            {group.pages.map((page) => (
+              <li><a href={page.href} class="text-[15px] text-ink/75 transition hover:text-brand">{page.label}</a></li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Layout>

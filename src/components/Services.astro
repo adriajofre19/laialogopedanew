@@ -1,0 +1,35 @@
+---
+import { services } from '../data/services';
+---
+<section class="section-pad bg-white pt-32 md:pt-36">
+  <div class="container-shell">
+    <div class="reveal max-w-3xl">
+      <span class="eyebrow">Laia Logopeda</span>
+      <h1 class="section-title">Serveis</h1>
+      <h2 class="mt-4 font-display text-2xl font-semibold leading-tight text-ink md:text-3xl">Sessions individualitzades i de qualitat</h2>
+      <p class="section-lead mt-2">Consulta els serveis de Laia Logopeda</p>
+      <a href="/sobre-mi" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:gap-3">Coneix-me més <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {services.map((service, i) => (
+        <a href={`/serveis/${service.slug}`} id={service.id} class="reveal group card flex flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-soft" style={`transition-delay:${i * 50}ms`}>
+          <div class="relative overflow-hidden">
+            <img src={service.image} srcset={`${service.image.replace('/img-1024-768/', '/img-640-480/')} 640w, ${service.image} 1024w`} sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" alt={service.alt} class="h-56 w-full object-cover transition duration-500 group-hover:scale-[1.03]" width="1024" height="768" loading="lazy" decoding="async" />
+            <div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-3 bg-brand/80 px-5 py-3 backdrop-blur-sm">
+              <h3 class="font-display text-xl font-bold leading-tight text-white">{service.title}</h3>
+              <svg class="shrink-0 text-white transition group-hover:translate-x-1" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="reveal mt-12 flex flex-col items-start justify-between gap-5 rounded-[1.75rem] bg-brand bg-cover bg-center p-7 text-white shadow-soft sm:flex-row sm:items-center sm:p-8" style="background-image:linear-gradient(rgba(76,124,148,.9),rgba(76,124,148,.9)),url('/images/pwimg-1100/img-4317-1.jpg')">
+      <div>
+        <p class="font-display text-2xl font-bold">Contacta sense compromís</p>
+      </div>
+      <a href="/contacte" class="inline-flex shrink-0 rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand transition hover:bg-brand-light">Contacta</a>
+    </div>
+  </div>
+</section>

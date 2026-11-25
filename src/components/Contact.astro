@@ -1,0 +1,101 @@
+---
+import { site } from '../data/site';
+
+const location = site.locations.find((item) => item.name === 'Sant Julià de Ramis') ?? site.locations[0];
+const mapEmbed = 'https://www.google.com/maps?q=42.0240105,2.8241111&z=16&output=embed';
+---
+<section class="section-pad bg-white pt-32 md:pt-36">
+  <div class="container-shell">
+    <div class="reveal max-w-3xl">
+      <span class="eyebrow">Laia Logopeda</span>
+      <h1 class="section-title">Reserva la teva sessió amb Laia Logopeda</h1>
+      <p class="section-lead">Per a qualsevol consulta o per sol·licitar una cita, pots posar-te en contacte amb nosaltres a través dels següents canals. Estic encantada d'ajudar-te!</p>
+    </div>
+    <div class="mt-12 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+      <div class="space-y-5 reveal">
+        <div class="card p-6">
+          <p class="text-sm font-semibold uppercase tracking-wider text-brand">Contacte directe</p>
+          <p class="mt-2 font-display text-xl font-bold text-ink">{site.fullName}</p>
+          <div class="mt-4 space-y-4">
+            <a href={site.phoneHref} class="flex items-center gap-4 rounded-2xl bg-mist/70 p-4 transition hover:bg-brand-light">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.69 12.8a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 9.91a16 16 0 0 0 6.18 6.18l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 17z"/></svg></span>
+              <div><p class="text-sm text-ink/60">Telèfon</p><p class="font-semibold text-ink">{site.phone}</p></div>
+            </a>
+            <a href={`mailto:${site.email}`} class="flex items-center gap-4 rounded-2xl bg-mist/70 p-4 transition hover:bg-brand-light">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16v16H4z"/><path d="m22 6-10 7L2 6"/></svg></span>
+              <div class="min-w-0"><p class="text-sm text-ink/60">Correu electrònic</p><p class="font-semibold text-ink break-all">{site.email}</p></div>
+            </a>
+            <a href={site.domain} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 rounded-2xl bg-mist/70 p-4 transition hover:bg-brand-light">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 5.5 3.5 9S14.5 18.5 12 21c-2.5-2.5-3.5-5.5-3.5-9S9.5 5.5 12 3Z"/></svg></span>
+              <div><p class="text-sm text-ink/60">Web</p><p class="font-semibold text-ink">laialogopeda.com</p></div>
+            </a>
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 rounded-2xl bg-mist/70 p-4 transition hover:bg-brand-light">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></span>
+              <div><p class="text-sm text-ink/60">LinkedIn</p><p class="font-semibold text-ink">{site.fullName}</p></div>
+            </a>
+          </div>
+          <div class="mt-5 flex items-start gap-4 rounded-2xl bg-mist/70 p-4">
+            <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-brand shadow-sm"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <div class="min-w-0">
+              <p class="text-sm text-ink/60">Horari</p>
+              <p class="font-semibold text-ink">{site.hours}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card p-6">
+          <p class="font-display text-xl font-bold text-ink">{location.name}</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink/75">{location.address}</p>
+          <a href={location.maps} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Obrir a Google Maps</a>
+        </div>
+        <div class="card overflow-hidden">
+          <iframe src={mapEmbed} title="Com arribar-hi a Sant Julià de Ramis" class="h-[280px] w-full grayscale sm:h-[320px]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <div class="reveal card p-6 sm:p-8">
+        <form id="contact-form" class="space-y-5" novalidate>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="block"><span class="mb-1.5 block text-sm font-semibold text-ink">Nom i cognoms *</span><input name="name" required autocomplete="name" class="w-full rounded-xl border border-brand/15 bg-mist/40 px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" placeholder="El teu nom i cognoms" /></label>
+            <label class="block"><span class="mb-1.5 block text-sm font-semibold text-ink">Número de telèfon</span><input name="phone" type="tel" autocomplete="tel" class="w-full rounded-xl border border-brand/15 bg-mist/40 px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" placeholder="El teu telèfon" /></label>
+          </div>
+          <label class="block"><span class="mb-1.5 block text-sm font-semibold text-ink">Correu electrònic *</span><input name="email" type="email" required autocomplete="email" class="w-full rounded-xl border border-brand/15 bg-mist/40 px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" placeholder="nom@exemple.com" /></label>
+          <label class="block"><span class="mb-1.5 block text-sm font-semibold text-ink">Missatge *</span><textarea name="message" required rows="5" class="w-full rounded-xl border border-brand/15 bg-mist/40 px-4 py-3 text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20" placeholder="Explica'm en què et puc ajudar"></textarea></label>
+          <div class="space-y-3 text-sm text-ink/75">
+            <label class="flex items-start gap-3"><input name="privacy" type="checkbox" required class="mt-1 h-4 w-4 shrink-0 accent-brand" /><span>He llegit la <a href="/privacitat" class="font-semibold text-brand hover:underline">Política de privacitat</a>. *</span></label>
+            <label class="flex items-start gap-3"><input name="news" type="checkbox" class="mt-1 h-4 w-4 shrink-0 accent-brand" /><span>Vull rebre informació sobre les activitats, els serveis i els productes de Laia Carbonell Renart.</span></label>
+          </div>
+          <details class="group/details rounded-2xl bg-mist/70 p-4">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-brand">Informació sobre el tractament de dades<svg class="shrink-0 transition group-open/details:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <div class="mt-3 space-y-2 text-xs leading-relaxed text-ink/70">
+              <p>Responsable del tractament: Laia Carbonell Renart. Finalitat: oferir, prestar i facturar els nostres serveis i productes. Legitimació: consentiment de la persona interessada.</p>
+              <p>Destinataris: les dades no es cediran a tercers, llevat que ho exigeixi una llei o sigui necessari per complir amb la finalitat del tractament. Drets: accedir, rectificar i suprimir dades, així com la resta que s’expliquen en la política de privacitat.</p>
+              <p>Reglament (UE) 2016/679 i LO 3/2018. Més informació a la <a href="/privacitat" class="font-semibold text-brand hover:underline">política de privacitat</a>. * Camps obligatoris.</p>
+            </div>
+          </details>
+          <p id="form-feedback" class="hidden rounded-xl px-4 py-3 text-sm"></p>
+          <button type="submit" class="inline-flex w-full items-center justify-center rounded-full bg-brand px-7 py-3.5 text-base font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-brand-dark sm:w-auto">Envia</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const feedback = document.getElementById('form-feedback');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!feedback) return;
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const privacy = data.get('privacy') !== null;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    feedback.classList.remove('hidden', 'bg-red-50', 'text-red-700', 'bg-brand-light', 'text-brand');
+    if (!name || !email || !message || !privacy) { feedback.textContent = 'Si us plau, omple els camps obligatoris i accepta la política de privacitat.'; feedback.classList.add('bg-red-50', 'text-red-700'); return; }
+    if (!emailOk) { feedback.textContent = 'Introdueix un correu electrònic vàlid.'; feedback.classList.add('bg-red-50', 'text-red-700'); return; }
+    feedback.textContent = 'Formulari validat correctament. El servei d’enviament encara no està configurat; pots contactar per telèfon o correu electrònic.';
+    feedback.classList.add('bg-brand-light', 'text-brand');
+    form.reset();
+  });
+</script>
