@@ -1,6 +1,9 @@
 ---
 import '../styles/global.css';
 import { site } from '../data/site';
+import CookieConsent from '../components/CookieConsent.astro';
+import { getLang, ui } from '../i18n/ui';
+import { alternatePaths, withTrailingSlash } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -8,7 +11,10 @@ interface Props {
 }
 
 const { title = site.title, description = site.description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, site.domain).toString();
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const canonical = new URL(withTrailingSlash(Astro.url.pathname), site.domain).toString();
+const alternates = alternatePaths(Astro.url.pathname);
 const ogImage = new URL('/images/img-1600-900/img-4163.jpg', site.domain).toString();
 const schema = {
   '@context': 'https://schema.org',
@@ -34,17 +40,17 @@ const schema = {
       email: site.email,
       url: site.domain,
       areaServed: ['Sant Julià de Ramis', 'Figueres', 'Girona'],
-      address: site.locations.map((l) => ({
+      address: [{
         '@type': 'PostalAddress',
-        streetAddress: l.address,
+        streetAddress: t.schemaAddress,
         addressCountry: 'ES',
-      })),
+      }],
     },
   ],
 };
 ---
 <!doctype html>
-<html lang="ca">
+<html lang={t.htmlLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -52,8 +58,11 @@ const schema = {
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href="/images/logo.ico" sizes="any" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" href={new URL(alternates.ca, site.domain).toString()} hreflang="ca" />
+    <link rel="alternate" href={new URL(alternates.es, site.domain).toString()} hreflang="es" />
+    <link rel="alternate" href={new URL(alternates.ca, site.domain).toString()} hreflang="x-default" />
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="ca_ES" />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'ca_ES'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -69,8 +78,9 @@ const schema = {
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body class="bg-white text-ink antialiased">
-    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-brand">Salta al contingut</a>
+    <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-brand">{t.skip}</a>
     <slot />
+    <CookieConsent />
     <script>
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

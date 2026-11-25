@@ -1,5 +1,8 @@
 ---
 import { services, type Service } from '../data/services';
+import { services as servicesEs } from '../data/services.es';
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
 import ServiceSlider from './ServiceSlider.astro';
 
 interface Props {
@@ -7,23 +10,25 @@ interface Props {
 }
 
 const { service } = Astro.props;
-const related = services.filter((item) => item.slug !== service.slug);
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const related = (lang === 'es' ? servicesEs : services).filter((item) => item.slug !== service.slug);
 ---
 <section class="section-pad bg-white pt-32 md:pt-36">
   <div class="container-shell">
-    <nav class="mb-8 flex flex-wrap items-center gap-2 text-sm text-ink/60" aria-label="Fil d'Ariadna">
-      <a href="/serveis" class="font-semibold text-brand transition hover:text-brand-dark">Serveis</a>
+    <nav class="mb-8 flex flex-wrap items-center gap-2 text-sm text-ink/60" aria-label={t.service.breadcrumb}>
+      <a href={localizedPath(lang, '/serveis')} class="font-semibold text-brand transition hover:text-brand-dark">{t.services.h1}</a>
       <span aria-hidden="true">/</span>
       <span class="text-ink/80">{service.title}</span>
     </nav>
 
     <div class="reveal max-w-3xl">
-      <span class="eyebrow">Laia Logopeda</span>
+      <span class="eyebrow">{t.eyebrow}</span>
       <h1 class="section-title mt-3">{service.title}</h1>
     </div>
 
     <div class="reveal mt-8">
-      <ServiceSlider images={service.gallery} alt={`Activitat de logopèdia: ${service.title}`} />
+      <ServiceSlider images={service.gallery} alt={`${t.service.alt} ${service.title}`} label={t.service.imagesLabel} />
     </div>
 
     <div class="mt-10 grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:items-start">
@@ -43,23 +48,23 @@ const related = services.filter((item) => item.slug !== service.slug);
       </div>
 
       <aside class="reveal card p-6 lg:sticky lg:top-28">
-        <p class="font-display text-xl font-bold text-ink">Contacta per a reservar la teva sessió</p>
-        <p class="mt-2 text-sm leading-relaxed text-ink/70">Parlem de què necessites i trobem el millor acompanyament per a tu.</p>
-        <a href="/contacte" class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-brand-dark">Contacta <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+        <p class="font-display text-xl font-bold text-ink">{t.service.asideTitle}</p>
+        <p class="mt-2 text-sm leading-relaxed text-ink/70">{t.service.asideText}</p>
+        <a href={localizedPath(lang, '/contacte')} class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-brand-dark">{t.common.contacta} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
       </aside>
     </div>
 
     <div class="mt-16 border-t border-brand/10 pt-12">
-      <h2 class="font-display text-2xl font-bold text-ink">També et pot interessar</h2>
+      <h2 class="font-display text-2xl font-bold text-ink">{t.service.related}</h2>
       <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {related.map((item) => (
-          <a href={`/serveis/${item.slug}`} class="group card overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-soft">
+          <a href={localizedPath(lang, `/serveis/${item.slug}`)} class="group card overflow-hidden transition duration-300 hover:-translate-y-1 hover:shadow-soft">
             <div class="relative overflow-hidden">
               <img src={item.image} alt={item.alt} class="h-40 w-full object-cover transition duration-500 group-hover:scale-[1.03]" width="1024" height="768" loading="lazy" decoding="async" />
             </div>
             <div class="p-4">
               <h3 class="font-display text-base font-bold leading-tight text-ink">{item.title}</h3>
-              <span class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand">Veure servei <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span>
+              <span class="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-brand">{t.service.viewService} <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></span>
             </div>
           </a>
         ))}

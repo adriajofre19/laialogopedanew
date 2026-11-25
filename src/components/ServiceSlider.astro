@@ -2,11 +2,12 @@
 interface Props {
   images: string[];
   alt: string;
+  label: string;
 }
 
-const { images, alt } = Astro.props;
+const { images, alt, label } = Astro.props;
 ---
-<div data-service-slider class="card relative aspect-video max-h-[560px] w-full overflow-hidden bg-brand-light shadow-soft" role="group" aria-roledescription="carrusel" aria-label="Imatges del servei">
+<div data-service-slider class="card relative aspect-video max-h-[560px] w-full overflow-hidden bg-brand-light shadow-soft" role="group" aria-roledescription="carrusel" aria-label={label}>
   {images.map((file, i) => (
     <div data-slide class:list={['absolute inset-0 transition-opacity duration-700 ease-in-out', i === 0 ? 'opacity-100' : 'opacity-0']} aria-hidden={i === 0 ? 'false' : 'true'}>
       <img src={`/images/img-1024-576/${file}`} alt={alt} class="h-full w-full object-cover" width="1024" height="576" loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />

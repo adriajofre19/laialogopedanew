@@ -1,20 +1,27 @@
 ---
 import { faqs } from '../data/faqs';
+import { faqs as faqsEs } from '../data/faqs.es';
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const items = lang === 'es' ? faqsEs : faqs;
 ---
 <section class="section-pad bg-mist/60 pt-32 md:pt-36">
   <div class="container-shell grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
     <div class="reveal">
-      <span class="eyebrow">Laia Logopeda</span>
-      <h1 class="section-title">FAQS</h1>
-      <p class="section-lead">Resol els teus dubtes. A continuació trobaràs les respostes a les preguntes més freqüents sobre els serveis de logopèdia, el funcionament de les sessions i altres dubtes comuns.</p>
+      <span class="eyebrow">{t.eyebrow}</span>
+      <h1 class="section-title">{t.faq.h1}</h1>
+      <p class="section-lead">{t.faq.lead}</p>
       <div class="mt-8 rounded-[1.75rem] bg-brand p-6 text-white shadow-soft sm:p-8">
-        <p class="font-display text-2xl font-bold">Contacta sense compromís</p>
-        <p class="mt-3 text-white/85 leading-relaxed">Si no trobes la resposta que busques, no dubtis a contactar-nos!</p>
-        <a href="/contacte" class="mt-5 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand transition hover:bg-brand-light">Contacta</a>
+        <p class="font-display text-2xl font-bold">{t.common.contactaSenseCompromis}</p>
+        <p class="mt-3 text-white/85 leading-relaxed">{t.faq.noAnswer}</p>
+        <a href={localizedPath(lang, '/contacte')} class="mt-5 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand transition hover:bg-brand-light">{t.common.contacta}</a>
       </div>
     </div>
     <div class="space-y-4">
-      {faqs.map((faq, i) => (
+      {items.map((faq, i) => (
         <details class="reveal group card overflow-hidden" style={`transition-delay:${i * 40}ms`}>
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
             <span class="font-display text-lg font-bold text-ink sm:text-xl">{faq.question}</span>

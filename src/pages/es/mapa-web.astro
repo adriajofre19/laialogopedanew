@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { services } from '../../data/services.es';
+
+const mainPages = [
+  { href: '/es/', label: 'Inicio', action: false },
+  { href: '/es/sobre-mi', label: 'Sobre mí', action: false },
+  { href: '/es/servicios', label: 'Servicios', action: false },
+  { href: '/es/faqs', label: 'FAQS', action: false },
+  { href: '/es/contacto', label: 'Contacto', action: false },
+];
+const servicePages = services.map((service) => ({ href: `/es/servicios/${service.slug}`, label: service.title, action: false }));
+const legalPages = [
+  { href: '/es/aviso-legal', label: 'Aviso legal', action: false },
+  { href: '/es/politica-de-privacidad', label: 'Política de privacidad', action: false },
+  { href: '/es/politica-de-cookies', label: 'Política de cookies', action: false },
+  { href: '#', label: 'Preferencias de cookies', action: true },
+  { href: '/es/mapa-web', label: 'Mapa web', action: false },
+  { href: '/es/accesibilidad', label: 'Accesibilidad', action: false },
+];
+const groups = [
+  { title: 'Navegación principal', pages: mainPages },
+  { title: 'Servicios', pages: servicePages },
+  { title: 'Información legal', pages: legalPages },
+];
+---
+<Layout title="Mapa web | Laia Carbonell Renart" description="Mapa web de laialogopeda.com con todos los enlaces del sitio web.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Información</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Mapa web</h1>
+    <p class="mt-5 max-w-3xl leading-relaxed text-ink/75">Aquí encontrarás todos los enlaces del sitio web de Laia Carbonell Renart.</p>
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
+      {groups.map((group) => (
+        <article class="card p-6 sm:p-7">
+          <h2 class="font-display text-xl font-bold text-ink">{group.title}</h2>
+          <ul class="mt-4 space-y-3">
+            {group.pages.map((page) => (
+              <li>{page.action ? <button type="button" data-cookie-preferences class="text-left text-[15px] text-ink/75 transition hover:text-brand">{page.label}</button> : <a href={page.href} class="text-[15px] text-ink/75 transition hover:text-brand">{page.label}</a>}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Layout>

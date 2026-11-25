@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import ServiceDetail from '../../../components/ServiceDetail.astro';
+import Footer from '../../../components/Footer.astro';
+import { services, type Service } from '../../../data/services.es';
+
+interface Props {
+  service: Service;
+}
+
+export const getStaticPaths = (() =>
+  services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }))) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+---
+<Layout title={`${service.title} | Laia Carbonell Renart`} description={service.intro}>
+  <Header />
+  <main id="main"><ServiceDetail service={service} /></main>
+  <Footer />
+</Layout>

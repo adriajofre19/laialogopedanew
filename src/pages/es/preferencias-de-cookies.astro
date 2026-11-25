@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+---
+<Layout title="Preferencias de cookies | Laia Carbonell Renart" description="Configura las preferencias de cookies del sitio web de Laia Carbonell Renart.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Legal</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Preferencias de cookies</h1>
+    <p class="mt-5 max-w-3xl leading-relaxed text-ink/75">Aquí puedes revisar y modificar las categorías de cookies opcionales. Las cookies necesarias permanecen activas para que el sitio web funcione correctamente.</p>
+    <button type="button" data-cookie-preferences class="mt-6 inline-flex items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark">Abrir el configurador</button>
+
+    <form id="cookie-form" class="mt-10 max-w-3xl card p-6 sm:p-8" novalidate>
+      <div class="space-y-4">
+        <label class="flex items-start justify-between gap-6 rounded-2xl bg-mist/70 p-4">
+          <span>
+            <span class="block font-semibold text-ink">Necesarias</span>
+            <span class="mt-1 block text-sm leading-relaxed text-ink/70">Imprescindibles para la navegación y para recordar las preferencias de consentimiento. No se pueden desactivar.</span>
+          </span>
+          <input type="checkbox" checked disabled aria-label="Cookies necesarias" class="mt-1 h-5 w-5 shrink-0 accent-brand" />
+        </label>
+        <label class="flex items-start justify-between gap-6 rounded-2xl bg-mist/70 p-4">
+          <span>
+            <span class="block font-semibold text-ink">Personalización</span>
+            <span class="mt-1 block text-sm leading-relaxed text-ink/70">Permiten recordar opciones de visualización y preferencias de navegación.</span>
+          </span>
+          <input id="cookie-preferences" type="checkbox" aria-label="Cookies de personalización" class="mt-1 h-5 w-5 shrink-0 accent-brand" />
+        </label>
+        <label class="flex items-start justify-between gap-6 rounded-2xl bg-mist/70 p-4">
+          <span>
+            <span class="block font-semibold text-ink">Analítica</span>
+            <span class="mt-1 block text-sm leading-relaxed text-ink/70">Permiten medir el uso del sitio web para detectar incidencias y mejorar la experiencia.</span>
+          </span>
+          <input id="cookie-analytics" type="checkbox" aria-label="Cookies de analítica" class="mt-1 h-5 w-5 shrink-0 accent-brand" />
+        </label>
+        <label class="flex items-start justify-between gap-6 rounded-2xl bg-mist/70 p-4">
+          <span>
+            <span class="block font-semibold text-ink">Publicidad y seguimiento</span>
+            <span class="mt-1 block text-sm leading-relaxed text-ink/70">Permiten mostrar contenidos publicitarios o hacer seguimiento de la navegación. Actualmente no se activan en este sitio web.</span>
+          </span>
+          <input id="cookie-marketing" type="checkbox" aria-label="Cookies de publicidad y seguimiento" class="mt-1 h-5 w-5 shrink-0 accent-brand" />
+        </label>
+      </div>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <button type="submit" class="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-dark">Guardar preferencias</button>
+        <button type="button" data-cookie-action="all" class="rounded-full border border-brand/20 px-6 py-3 text-sm font-semibold text-brand transition hover:bg-brand-light">Aceptarlas todas</button>
+        <button type="button" data-cookie-action="none" class="rounded-full border border-brand/20 px-6 py-3 text-sm font-semibold text-ink/70 transition hover:bg-mist">Rechazar las opcionales</button>
+      </div>
+      <p id="cookie-feedback" class="hidden mt-5 rounded-xl bg-brand-light px-4 py-3 text-sm text-brand" role="status"></p>
+    </form>
+
+    <p class="mt-6 max-w-3xl text-sm leading-relaxed text-ink/65">Puedes consultar más detalles en la <a href="/es/politica-de-cookies" class="font-semibold text-brand hover:underline">política de cookies</a>.</p>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const form = document.getElementById('cookie-form') as HTMLFormElement | null;
+  const feedback = document.getElementById('cookie-feedback');
+  const storageKey = 'laia-cookie-preferences';
+  const keys = ['preferences', 'analytics', 'marketing'] as const;
+  const inputs = Object.fromEntries(keys.map((key) => [key, document.getElementById(`cookie-${key}`) as HTMLInputElement | null]));
+
+  const readSaved = () => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) return;
+      const values = JSON.parse(saved) as Record<string, boolean>;
+      keys.forEach((key) => {
+        const input = inputs[key];
+        if (input) input.checked = Boolean(values[key]);
+      });
+    } catch {
+      return;
+    }
+  };
+
+  const save = (values: Record<string, boolean>) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(values));
+    } catch {
+      return;
+    }
+    if (!feedback) return;
+    feedback.textContent = 'Tus preferencias se han guardado correctamente.';
+    feedback.classList.remove('hidden');
+  };
+
+  const currentValues = () => Object.fromEntries(keys.map((key) => [key, Boolean(inputs[key]?.checked)]));
+
+  readSaved();
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    save(currentValues());
+  });
+
+  document.querySelectorAll('[data-cookie-action]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const action = button.getAttribute('data-cookie-action');
+      keys.forEach((key) => {
+        const input = inputs[key];
+        if (input) input.checked = action === 'all';
+      });
+      save(currentValues());
+    });
+  });
+</script>

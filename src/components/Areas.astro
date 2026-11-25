@@ -1,24 +1,29 @@
 ---
-const areas = [
-  { slug: 'alteracions-en-la-lectura-i-o-escriptura', title: 'Alteracions en la lectura i/o escriptura', image: '/images/img-640-852/img-4174.jpg' },
-  { slug: 'alteracions-en-la-parla', title: 'Alteracions en la parla', image: '/images/img-640-852/img-4182.jpg' },
-  { slug: 'alteracions-en-la-veu', title: 'Alteracions en la veu', image: '/images/img-640-852/img-0119.jpg' },
-  { slug: 'deglucio-atipica', title: 'Alteracions en la deglució', image: '/images/img-640-852/img-9843.jpg' },
-  { slug: 'trastorns-del-llenguatge', title: 'Alteracions en el llenguatge', image: '/images/img-640-852/img-9931.jpg' },
-];
+import { services } from '../data/services';
+import { services as servicesEs } from '../data/services.es';
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const areas = (lang === 'es' ? servicesEs : services).map((service, i) => ({
+  slug: service.slug,
+  title: service.title,
+  image: ['/images/img-640-852/img-4174.jpg', '/images/img-640-852/img-4182.jpg', '/images/img-640-852/img-0119.jpg', '/images/img-640-852/img-9843.jpg', '/images/img-640-852/img-9931.jpg'][i],
+}));
 const slides = [...areas, ...areas.slice(0, 3)];
 ---
 <section class="section-pad relative overflow-hidden bg-white">
   <div class="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.08]" aria-hidden="true" style="background-image: url('/images/pwimg-2560/group-1515.png');"></div>
   <div class="container-shell relative">
     <div class="reveal flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
-      <h2 class="section-title !mt-0">Sessions individualitzades i de qualitat</h2>
-      <a href="/serveis" class="inline-flex shrink-0 items-center justify-center rounded-full border border-brand/25 bg-white px-6 py-3 text-sm font-semibold text-brand transition hover:bg-brand-light">Veure serveis</a>
+      <h2 class="section-title !mt-0">{t.areas.title}</h2>
+      <a href={localizedPath(lang, '/serveis')} class="inline-flex shrink-0 items-center justify-center rounded-full border border-brand/25 bg-white px-6 py-3 text-sm font-semibold text-brand transition hover:bg-brand-light">{t.common.veureServeis}</a>
     </div>
-    <div data-areas-carousel class="mt-12" role="group" aria-roledescription="carrusel" aria-label="Serveis de logopèdia">
+    <div data-areas-carousel class="mt-12" role="group" aria-roledescription="carrusel" aria-label={t.areas.aria}>
       <div data-carousel-track class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {slides.map((area, i) => (
-          <a data-carousel-card href={`/serveis/${area.slug}`} class="reveal group relative block w-[85%] shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-ink shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]" style={`transition-delay:${i * 60}ms`}>
+          <a data-carousel-card href={localizedPath(lang, `/serveis/${area.slug}`)} class="reveal group relative block w-[85%] shrink-0 snap-start overflow-hidden rounded-[1.75rem] bg-ink shadow-card transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]" style={`transition-delay:${i * 60}ms`}>
             <img src={area.image} alt={area.title} class="h-80 w-full object-cover transition duration-500 group-hover:scale-[1.04]" width="640" height="852" loading="lazy" decoding="async" />
             <span class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/10 to-transparent" aria-hidden="true"></span>
             <span class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6">
@@ -30,9 +35,9 @@ const slides = [...areas, ...areas.slice(0, 3)];
           </a>
         ))}
       </div>
-      <div class="mt-8 flex justify-center gap-2" role="group" aria-label="Navegació del carrusel">
+      <div class="mt-8 flex justify-center gap-2" role="group" aria-label={t.areas.dots}>
         {areas.map((area, i) => (
-          <button type="button" data-carousel-dot aria-label={`Mostrar ${area.title}`} aria-current={i === 0 ? 'true' : 'false'} class:list={['h-2 rounded-full transition-all duration-300', i === 0 ? 'w-6 bg-brand' : 'w-2 bg-brand/25 hover:bg-brand/50']}></button>
+          <button type="button" data-carousel-dot aria-label={`${t.areas.show} ${area.title}`} aria-current={i === 0 ? 'true' : 'false'} class:list={['h-2 rounded-full transition-all duration-300', i === 0 ? 'w-6 bg-brand' : 'w-2 bg-brand/25 hover:bg-brand/50']}></button>
         ))}
       </div>
     </div>

@@ -1,0 +1,69 @@
+---
+import { faqs } from '../data/faqs';
+import { faqs as faqsEs } from '../data/faqs.es';
+import { site } from '../data/site';
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
+import Hero from './Hero.astro';
+import Areas from './Areas.astro';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const items = lang === 'es' ? faqsEs : faqs;
+---
+<Hero />
+<section class="section-pad bg-mist/60">
+  <div class="container-shell grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+    <div class="reveal">
+      <img src="/images/img-960-960/group-15112.png" alt="laia" class="mx-auto h-auto w-full max-w-lg rounded-[2rem] shadow-card" width="960" height="960" loading="lazy" decoding="async" />
+    </div>
+    <div class="reveal">
+      <h2 class="section-title !mt-0">{t.home.bioTitle}</h2>
+      <div class="mt-8 space-y-4 text-[15px] leading-relaxed text-ink/75">
+        <p>{t.home.bio1}</p>
+        <p>{t.home.bio2}</p>
+        <p>{t.home.bio3}</p>
+      </div>
+      <a href={localizedPath(lang, '/serveis')} class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-brand transition hover:gap-3">{t.common.veureServeis} <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-7-7 7 7-7 7"/></svg></a>
+    </div>
+  </div>
+</section>
+<Areas />
+<section class="section-pad relative overflow-hidden bg-ink text-white">
+  <div class="pointer-events-none absolute inset-0 bg-cover bg-center opacity-20" aria-hidden="true" style="background-image: url('/images/pwimg-2560/group-1512-1.png');"></div>
+  <div class="container-shell relative">
+    <div class="reveal">
+      <h2 class="section-title !mt-0 !text-white">{t.common.contactaSenseCompromis}</h2>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={site.phoneHref} class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3.5 text-base font-semibold text-ink transition hover:-translate-y-0.5 hover:bg-brand-light">{t.common.truca}</a>
+        <a href={`mailto:${site.email}`} class="inline-flex items-center justify-center rounded-full border border-white/40 px-7 py-3.5 text-base font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10">{t.common.enviaCorreu}</a>
+      </div>
+    </div>
+    <div class="reveal mt-10 overflow-hidden rounded-[1.75rem] border border-white/15 bg-white shadow-card">
+      <iframe src="https://www.google.com/maps?q=42.0240105,2.8241111&z=16&output=embed" title={t.contact.mapTitle} class="h-[320px] w-full grayscale sm:h-[420px]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <p class="reveal mt-6 text-center font-display text-lg font-semibold text-white sm:text-xl">{t.home.address}</p>
+  </div>
+</section>
+<section class="section-pad bg-white">
+  <div class="container-shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+    <div class="reveal">
+      <h2 class="section-title !mt-0">{t.home.faqTitle}</h2>
+    </div>
+    <div class="space-y-4">
+      {items.map((faq, i) => (
+        <details class="reveal group card overflow-hidden" style={`transition-delay:${i * 40}ms`}>
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6">
+            <span class="font-display text-lg font-bold text-ink sm:text-xl">{faq.question}</span>
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-light text-brand transition group-open:rotate-45">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+          </summary>
+          <div class="px-5 pb-5 sm:px-6 sm:pb-6">
+            <div class="space-y-3 border-t border-brand/10 pt-4 text-[15px] leading-relaxed text-ink/75">{faq.answer.map((p) => <p>{p}</p>)}</div>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '../../data/site';
+
+const sections = [
+  {
+    title: 'Titular del sitio web',
+    paragraphs: [
+      `El sitio web laialogopeda.com es titularidad de ${site.fullName}, con NIF 41565620C, domicilio en Mas Molí de Baix, 42, 17469 El Far d’Empordà, teléfono ${site.phone} y correo electrónico ${site.email}.`,
+    ],
+  },
+  {
+    title: 'Propiedad intelectual e industrial',
+    paragraphs: [
+      'Los contenidos de este sitio web, incluidos los textos, las imágenes, los diseños gráficos, los logotipos y otros elementos, son propiedad del titular o de terceros que han autorizado su utilización, y están protegidos por la legislación aplicable.',
+      'Queda prohibida la reproducción, distribución, transformación o comunicación pública sin la autorización previa y expresa de sus respectivos titulares, salvo en los casos permitidos por la ley.',
+    ],
+  },
+  {
+    title: 'Exclusión de responsabilidad',
+    paragraphs: [
+      'El titular procura que la información publicada sea exacta y esté actualizada. No obstante, no garantiza la ausencia de errores u omisiones y se reserva el derecho de modificar, actualizar o eliminar los contenidos en cualquier momento.',
+      'El titular no se hace responsable de los contenidos, las informaciones o los servicios ofertados en sitios web de terceros a los que se pueda acceder mediante enlaces desde este sitio web.',
+    ],
+  },
+  {
+    title: 'Condiciones de uso',
+    paragraphs: [
+      'El acceso y la utilización de este sitio web implican el conocimiento y la aceptación de las condiciones establecidas en este aviso legal, sin perjuicio de los derechos que legalmente correspondan a los usuarios.',
+      'El uso del sitio web se regirá por la legislación española y cualquier controversia relacionada con su utilización se someterá a los juzgados y tribunales competentes.',
+    ],
+  },
+];
+---
+<Layout title="Aviso legal | Laia Carbonell Renart" description="Aviso legal del sitio web de Laia Carbonell Renart, logopeda.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Legal</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Aviso legal</h1>
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
+      {sections.map((section) => (
+        <article class="card p-6 sm:p-7">
+          <h2 class="font-display text-xl font-bold text-ink">{section.title}</h2>
+          <div class="mt-3 space-y-3 text-[15px] leading-relaxed text-ink/75">{section.paragraphs.map((p) => <p>{p}</p>)}</div>
+        </article>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Layout>

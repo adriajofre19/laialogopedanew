@@ -16,11 +16,6 @@ export const site = {
       name: 'Sant Julià de Ramis',
       address: 'Carrer de la Bòbila 20, baixos, 17481 Sant Julià de Ramis, Girona.',
       maps: 'https://www.google.com/maps/search/?api=1&query=Carrer+de+la+B%C3%B2bila+20+17481+Sant+Juli%C3%A0+de+Ramis',
-    },
-    {
-      name: 'Figueres',
-      address: 'Centre privat de logopèdia de l’Emma Pont, Figueres.',
-      maps: 'https://www.google.com/maps/search/?api=1&query=Centre+de+logop%C3%A8dia+Emma+Pont+Figueres',
-    },
+    }
   ],
 };

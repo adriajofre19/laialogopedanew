@@ -1,0 +1,183 @@
+---
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
+const savedMessage = t.cookies.saved;
+---
+<div id="cookie-consent" class="fixed bottom-6 left-6 z-[90] lg:bottom-8 lg:left-8">
+  <div id="cookie-notice" class="absolute bottom-16 left-0 hidden w-[min(24rem,calc(100vw-3rem))] rounded-lg bg-white p-6 text-[#444] shadow-[0_4px_10px_rgba(0,0,0,.3)] sm:p-8">
+    <h2 class="font-display text-xl font-bold text-black">{t.cookies.noticeTitle}</h2>
+    <p class="mt-3 text-sm leading-relaxed">{t.cookies.noticeText}</p>
+    <div class="mt-5 flex flex-wrap items-center gap-3">
+      <button type="button" data-cookie-action="all" class="rounded-full bg-black px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-ink">{t.cookies.acceptAll}</button>
+      <button type="button" data-cookie-action="none" class="rounded-full border border-black px-4 py-2.5 text-sm font-semibold text-black transition hover:bg-mist">{t.cookies.rejectOptional}</button>
+      <button type="button" data-cookie-action="open" class="text-sm font-semibold text-black underline underline-offset-4 transition hover:text-brand">{t.cookies.configure}</button>
+    </div>
+  </div>
+  <button id="cookie-launcher" type="button" class="flex h-12 w-12 items-center justify-center rounded-full border border-black bg-black text-white shadow-lg transition hover:scale-105" title={t.cookies.launcher} aria-label={t.cookies.launcher} aria-expanded="false" aria-controls="cookie-modal">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 4 4 0 0 1-5-5 4 4 0 0 1-4-4Z"/><circle cx="9" cy="10" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="14" r="1" fill="currentColor" stroke="none"/><circle cx="10" cy="16" r="1" fill="currentColor" stroke="none"/></svg>
+  </button>
+</div>
+
+<div id="cookie-backdrop" class="fixed inset-0 z-[95] hidden bg-black/50" aria-hidden="true"></div>
+<div id="cookie-modal" class="fixed inset-0 z-[96] hidden p-4 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="cookie-modal-title" aria-hidden="true">
+  <div class="mx-auto flex min-h-full w-full max-w-xl items-center justify-center">
+    <div class="w-full rounded-lg bg-white p-6 shadow-[0_4px_10px_rgba(0,0,0,.3)] sm:p-8">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 id="cookie-modal-title" class="font-display text-2xl font-bold text-black">{t.cookies.configTitle}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-[#444]">{t.cookies.configText}</p>
+        </div>
+        <button id="cookie-close" type="button" class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-black transition hover:bg-mist" aria-label={t.cookies.close}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+
+      <div class="mt-6 space-y-3">
+        <label class="flex items-start justify-between gap-5 rounded-xl bg-mist/60 p-4">
+          <span><span class="block text-sm font-semibold text-ink">{t.cookies.necessary}</span><span class="mt-1 block text-xs leading-relaxed text-ink/65">{t.cookies.necessaryText}</span></span>
+          <input type="checkbox" checked disabled aria-label={t.cookies.necessary} class="mt-1 h-5 w-5 shrink-0 accent-black" />
+        </label>
+        <label class="flex items-start justify-between gap-5 rounded-xl bg-mist/60 p-4">
+          <span><span class="block text-sm font-semibold text-ink">{t.cookies.personalization}</span><span class="mt-1 block text-xs leading-relaxed text-ink/65">{t.cookies.personalizationText}</span></span>
+          <input id="cookie-consent-preferences" type="checkbox" aria-label={t.cookies.personalization} class="mt-1 h-5 w-5 shrink-0 accent-black" />
+        </label>
+        <label class="flex items-start justify-between gap-5 rounded-xl bg-mist/60 p-4">
+          <span><span class="block text-sm font-semibold text-ink">{t.cookies.analytics}</span><span class="mt-1 block text-xs leading-relaxed text-ink/65">{t.cookies.analyticsText}</span></span>
+          <input id="cookie-consent-analytics" type="checkbox" aria-label={t.cookies.analytics} class="mt-1 h-5 w-5 shrink-0 accent-black" />
+        </label>
+        <label class="flex items-start justify-between gap-5 rounded-xl bg-mist/60 p-4">
+          <span><span class="block text-sm font-semibold text-ink">{t.cookies.marketing}</span><span class="mt-1 block text-xs leading-relaxed text-ink/65">{t.cookies.marketingText}</span></span>
+          <input id="cookie-consent-marketing" type="checkbox" aria-label={t.cookies.marketing} class="mt-1 h-5 w-5 shrink-0 accent-black" />
+        </label>
+      </div>
+
+      <p id="cookie-modal-feedback" data-saved-message={savedMessage} class="hidden mt-4 rounded-lg bg-mist px-4 py-3 text-sm text-ink" role="status"></p>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button type="button" data-cookie-action="save" class="rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-ink">{t.cookies.save}</button>
+        <button type="button" data-cookie-action="all" class="rounded-full border border-black px-5 py-2.5 text-sm font-semibold text-black transition hover:bg-mist">{t.cookies.acceptAll}</button>
+      </div>
+      <a href={localizedPath(lang, '/politica-de-cookies')} class="mt-5 inline-block text-sm font-semibold text-black underline underline-offset-4 transition hover:text-brand">{t.cookies.policy}</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const storageKey = 'laia-cookie-preferences';
+  const keys = ['preferences', 'analytics', 'marketing'] as const;
+  const notice = document.getElementById('cookie-notice');
+  const launcher = document.getElementById('cookie-launcher');
+  const backdrop = document.getElementById('cookie-backdrop');
+  const modal = document.getElementById('cookie-modal');
+  const closeBtn = document.getElementById('cookie-close');
+  const feedback = document.getElementById('cookie-modal-feedback');
+  const inputs = Object.fromEntries(keys.map((key) => [key, document.getElementById(`cookie-consent-${key}`) as HTMLInputElement | null]));
+
+  const values = () => Object.fromEntries(keys.map((key) => [key, Boolean(inputs[key]?.checked)]));
+
+  const apply = (saved: Record<string, boolean>) => {
+    keys.forEach((key) => {
+      const input = inputs[key];
+      if (input) input.checked = Boolean(saved[key]);
+    });
+  };
+
+  const persist = (preferences: Record<string, boolean>) => {
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(preferences));
+    } catch {
+      return;
+    }
+  };
+
+  const hideNotice = () => notice?.classList.add('hidden');
+
+  const openModal = () => {
+    hideNotice();
+    backdrop?.classList.remove('hidden');
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+    modal?.setAttribute('aria-hidden', 'false');
+    launcher?.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('overflow-hidden');
+  };
+
+  const closeModal = () => {
+    backdrop?.classList.add('hidden');
+    modal?.classList.remove('flex');
+    modal?.classList.add('hidden');
+    modal?.setAttribute('aria-hidden', 'true');
+    launcher?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('overflow-hidden');
+  };
+
+  const saveAndClose = (preferences: Record<string, boolean>) => {
+    persist(preferences);
+    hideNotice();
+    closeModal();
+    if (feedback) feedback.classList.add('hidden');
+  };
+
+  const read = () => {
+    try {
+      const saved = localStorage.getItem(storageKey);
+      if (!saved) {
+        notice?.classList.remove('hidden');
+        return;
+      }
+      apply(JSON.parse(saved) as Record<string, boolean>);
+    } catch {
+      notice?.classList.remove('hidden');
+    }
+  };
+
+  launcher?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  backdrop?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+  document.addEventListener('cookienator:show-configurator', openModal);
+  document.querySelectorAll('[data-cookie-preferences]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  });
+  document.querySelectorAll('[data-cookie-action]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const action = button.getAttribute('data-cookie-action');
+      if (action === 'open') {
+        openModal();
+        return;
+      }
+      if (action === 'all') {
+        keys.forEach((key) => {
+          const input = inputs[key];
+          if (input) input.checked = true;
+        });
+        saveAndClose(values());
+        return;
+      }
+      if (action === 'none') {
+        keys.forEach((key) => {
+          const input = inputs[key];
+          if (input) input.checked = false;
+        });
+        saveAndClose(values());
+        return;
+      }
+      if (action === 'save') {
+        persist(values());
+        hideNotice();
+        if (feedback) {
+          feedback.textContent = feedback.dataset.savedMessage ?? '';
+          feedback.classList.remove('hidden');
+        }
+      }
+    });
+  });
+
+  read();
+</script>

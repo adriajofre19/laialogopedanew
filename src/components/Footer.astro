@@ -1,31 +1,36 @@
 ---
 import { site } from '../data/site';
+import { getLang, ui } from '../i18n/ui';
+import { localizedPath } from '../i18n/utils';
+
+const lang = getLang(Astro.currentLocale);
+const t = ui[lang];
 const year = new Date().getFullYear();
 const nav = [
-  { href: '/', label: 'Inici' },
-  { href: '/sobre-mi', label: 'Sobre mi' },
-  { href: '/serveis', label: 'Serveis' },
-  { href: '/faqs', label: 'FAQS' },
-  { href: '/contacte', label: 'Contacte' },
+  { canonical: '/', label: t.nav.inici },
+  { canonical: '/sobre-mi', label: t.nav.sobreMi },
+  { canonical: '/serveis', label: t.nav.serveis },
+  { canonical: '/faqs', label: t.nav.faqs },
+  { canonical: '/contacte', label: t.nav.contacte },
 ];
 const legal = [
-  { href: '/avis-legal', label: 'Avís legal' },
-  { href: '/privacitat', label: 'Política de privacitat' },
-  { href: '/politica-de-cookies', label: 'Política de cookies' },
-  { href: '/preferencies-de-cookies', label: 'Preferències de cookies' },
-  { href: '/mapa-web', label: 'Mapa web' },
-  { href: '/accessibilitat', label: 'Accessibilitat' },
+  { canonical: '/avis-legal', label: t.legalLabels.avisLegal, action: false },
+  { canonical: '/privacitat', label: t.legalLabels.privacitat, action: false },
+  { canonical: '/politica-de-cookies', label: t.legalLabels.cookies, action: false },
+  { canonical: '/preferencies-de-cookies', label: t.legalLabels.preferencies, action: true },
+  { canonical: '/mapa-web', label: t.legalLabels.mapaWeb, action: false },
+  { canonical: '/accessibilitat', label: t.legalLabels.accessibilitat, action: false },
 ];
 ---
 <footer class="border-t border-brand/10 bg-mist/40 pt-14 pb-8">
   <div class="container-shell">
     <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1fr]">
       <div>
-        <a href="/" class="inline-flex items-center gap-3">
-          <img src="/images/pqimg-640-640/laialogopeda.png" alt="Laia Carbonell Renart" class="h-11 w-11 rounded-2xl object-contain bg-brand-light p-1.5" width="416" height="640" loading="lazy" />
-          <span class="font-display text-2xl font-extrabold text-ink">Laia Carbonell</span>
+        <a href={localizedPath(lang, '/')} class="inline-flex items-center gap-3">
+          <img src="/images/pqimg-640-640/laialogopeda-3.png" alt={site.fullName} class="h-[60px] w-[60px] object-contain" width="640" height="640" loading="lazy" />
+          <span class="font-display text-2xl font-extrabold text-ink">{t.brand}</span>
         </a>
-        <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink/70">Logopèdia personalitzada i humanitzada de proximitat. Compromís, experiència i benestar personal.</p>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed text-ink/70">{t.brandLine}</p>
         <div class="mt-5 flex gap-4">
           <a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
@@ -38,26 +43,26 @@ const legal = [
         </div>
       </div>
       <div>
-        <p class="font-display text-lg font-bold text-ink">Navegació</p>
+        <p class="font-display text-lg font-bold text-ink">{t.footer.navigation}</p>
         <ul class="mt-4 space-y-2">
-          {nav.map((item) => <li><a href={item.href} class="text-sm text-ink/70 transition hover:text-brand">{item.label}</a></li>)}
+          {nav.map((item) => <li><a href={localizedPath(lang, item.canonical)} class="text-sm text-ink/70 transition hover:text-brand">{item.label}</a></li>)}
         </ul>
       </div>
       <div>
-        <p class="font-display text-lg font-bold text-ink">Contacte</p>
+        <p class="font-display text-lg font-bold text-ink">{t.footer.contact}</p>
         <ul class="mt-4 space-y-3 text-sm text-ink/70">
           <li><a href={site.phoneHref} class="hover:text-brand">{site.phone}</a></li>
           <li><a href={`mailto:${site.email}`} class="break-all hover:text-brand">{site.email}</a></li>
-          <li>{site.hours}</li>
-          {site.locations.map((loc) => <li>{loc.address}</li>)}
+          <li>{t.contact.hours}</li>
+          <li>{t.contact.address}</li>
         </ul>
       </div>
     </div>
     <div class="mt-10 border-t border-brand/10 pt-6 text-sm text-ink/55">
-      <p>© {year} Laia Carbonell. Tots els drets reservats.</p>
-      <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
-        {legal.map((item) => <li><a href={item.href} class="transition hover:text-brand">{item.label}</a></li>)}
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        {legal.map((item) => <li>{item.action ? <button type="button" data-cookie-preferences class="text-left transition hover:text-brand">{item.label}</button> : <a href={localizedPath(lang, item.canonical)} class="transition hover:text-brand">{item.label}</a>}</li>)}
       </ul>
+      <p class="mt-4 text-xs text-ink/45">© {year} {site.fullName}. {t.footer.rights}</p>
     </div>
   </div>
 </footer>

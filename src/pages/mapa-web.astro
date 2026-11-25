@@ -5,20 +5,20 @@ import Footer from '../components/Footer.astro';
 import { services } from '../data/services';
 
 const mainPages = [
-  { href: '/', label: 'Inici' },
-  { href: '/sobre-mi', label: 'Sobre mi' },
-  { href: '/serveis', label: 'Serveis' },
-  { href: '/faqs', label: 'FAQS' },
-  { href: '/contacte', label: 'Contacte' },
+  { href: '/', label: 'Inici', action: false },
+  { href: '/sobre-mi', label: 'Sobre mi', action: false },
+  { href: '/serveis', label: 'Serveis', action: false },
+  { href: '/faqs', label: 'FAQS', action: false },
+  { href: '/contacte', label: 'Contacte', action: false },
 ];
-const servicePages = services.map((service) => ({ href: `/serveis/${service.slug}`, label: service.title }));
+const servicePages = services.map((service) => ({ href: `/serveis/${service.slug}`, label: service.title, action: false }));
 const legalPages = [
-  { href: '/avis-legal', label: 'Avís legal' },
-  { href: '/privacitat', label: 'Política de privacitat' },
-  { href: '/politica-de-cookies', label: 'Política de cookies' },
-  { href: '/preferencies-de-cookies', label: 'Preferències de cookies' },
-  { href: '/mapa-web', label: 'Mapa web' },
-  { href: '/accessibilitat', label: 'Accessibilitat' },
+  { href: '/avis-legal', label: 'Avís legal', action: false },
+  { href: '/privacitat', label: 'Política de privacitat', action: false },
+  { href: '/politica-de-cookies', label: 'Política de cookies', action: false },
+  { href: '#', label: 'Preferències de cookies', action: true },
+  { href: '/mapa-web', label: 'Mapa web', action: false },
+  { href: '/accessibilitat', label: 'Accessibilitat', action: false },
 ];
 const groups = [
   { title: 'Navegació principal', pages: mainPages },
@@ -38,7 +38,7 @@ const groups = [
           <h2 class="font-display text-xl font-bold text-ink">{group.title}</h2>
           <ul class="mt-4 space-y-3">
             {group.pages.map((page) => (
-              <li><a href={page.href} class="text-[15px] text-ink/75 transition hover:text-brand">{page.label}</a></li>
+              <li>{page.action ? <button type="button" data-cookie-preferences class="text-left text-[15px] text-ink/75 transition hover:text-brand">{page.label}</button> : <a href={page.href} class="text-[15px] text-ink/75 transition hover:text-brand">{page.label}</a>}</li>
             ))}
           </ul>
         </article>

@@ -1,0 +1,77 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { site } from '../../data/site';
+
+const sections = [
+  {
+    title: 'Información básica sobre el tratamiento de datos',
+    paragraphs: [],
+    items: [
+      'Responsable del tratamiento: Laia Carbonell Renart.',
+      'Finalidades: atender consultas y solicitudes, gestionar la prestación de servicios y las relaciones con los usuarios y clientes.',
+      'Legitimación: consentimiento del interesado, ejecución de un contrato o aplicación de medidas precontractuales y cumplimiento de obligaciones legales.',
+      'Destinatarios: los datos no se cederán a terceros, salvo que lo exija la ley o sea necesario para la prestación de los servicios.',
+      'Conservación: durante el tiempo necesario para cumplir las finalidades del tratamiento y los plazos legalmente exigibles.',
+      'Derechos: acceso, rectificación, supresión, oposición, limitación y portabilidad, así como retirada del consentimiento.',
+      'Reclamaciones: ante la Agencia Española de Protección de Datos (AEPD).',
+    ],
+  },
+  {
+    title: 'Responsable y finalidad del tratamiento',
+    paragraphs: [
+      `El responsable del tratamiento de los datos personales recopilados a través de laialogopeda.com es ${site.fullName}, con NIF 41565620C, domicilio en Mas Molí de Baix, 42, 17469 El Far d’Empordà, teléfono ${site.phone} y correo electrónico ${site.email}.`,
+      'El responsable se compromete a respetar la privacidad de los usuarios y a proteger sus datos personales de conformidad con el Reglamento (UE) 2016/679 (RGPD) y la Ley orgánica 3/2018 (LOPDGDD).',
+      'Los datos personales se utilizan para atender consultas, gestionar solicitudes de servicios, tareas administrativas y de facturación, y cumplir las obligaciones legales. No se utilizarán para finalidades incompatibles con aquellas para las que se recogieron.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Duración, destinatarios y seguridad',
+    paragraphs: [
+      'Los datos se conservarán durante el tiempo necesario para atender las solicitudes y gestionar la prestación de los servicios. Una vez finalizada la finalidad, podrán conservarse debidamente bloqueados durante los plazos necesarios para cumplir las obligaciones legales.',
+      'Determinados proveedores de servicios podrán acceder a los datos por cuenta del responsable con las garantías exigidas por la normativa aplicable. Si se realizan transferencias internacionales, cumplirán los requisitos y las garantías establecidos en el RGPD.',
+      'El responsable adoptará las medidas técnicas y organizativas apropiadas para garantizar la confidencialidad, la integridad y la disponibilidad de los datos.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Derechos y ejercicio de los derechos',
+    paragraphs: [
+      'Las personas interesadas pueden ejercer los derechos de acceso, rectificación, supresión, oposición, limitación del tratamiento, portabilidad y retirada del consentimiento mediante una solicitud dirigida al responsable, utilizando los datos de contacto indicados.',
+      'La solicitud debe permitir identificar al interesado y especificar el derecho que desea ejercer. El responsable responderá dentro de los plazos establecidos por la normativa de protección de datos.',
+      'Los datos tratados provienen principalmente de la información facilitada directamente por los usuarios al rellenar formularios o ponerse en contacto. Las categorías tratadas son datos identificativos, de contacto, relacionados con las consultas y datos administrativos o de facturación.',
+    ],
+    items: [],
+  },
+  {
+    title: 'Cookies',
+    paragraphs: [
+      'Este sitio web puede utilizar cookies y tecnologías similares para garantizar su funcionamiento y, cuando corresponda y se disponga de la base jurídica necesaria, para otras finalidades.',
+      'Puedes obtener información sobre las cookies utilizadas y las opciones de configuración y consentimiento en la política de cookies del sitio web.',
+    ],
+    items: [],
+  },
+];
+---
+<Layout title="Política de privacidad | Laia Carbonell Renart" description="Política de privacidad y protección de datos de Laia Carbonell Renart, logopeda.">
+  <Header />
+  <main id="main" class="container-shell py-32 md:py-36">
+    <span class="eyebrow">Legal</span>
+    <h1 class="mt-6 font-display text-4xl font-extrabold text-ink">Política de privacidad</h1>
+    <p class="mt-5 max-w-3xl leading-relaxed text-ink/75">Esta política informa sobre el tratamiento de los datos personales facilitados a través del sitio web y de los servicios ofertados. No se aplica a los sitios web de terceros a los que se pueda acceder mediante enlaces externos.</p>
+    <div class="mt-10 grid gap-5 lg:grid-cols-2">
+      {sections.map((section) => (
+        <article class="card p-6 sm:p-7">
+          <h2 class="font-display text-xl font-bold text-ink">{section.title}</h2>
+          <div class="mt-3 space-y-3 text-[15px] leading-relaxed text-ink/75">
+            {section.paragraphs.map((p) => <p>{p}</p>)}
+            {section.items.length > 0 && <ul class="space-y-2">{section.items.map((item) => <li class="flex gap-2"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"></span><span>{item}</span></li>)}</ul>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</Layout>
