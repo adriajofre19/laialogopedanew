@@ -62,7 +62,6 @@ const legal = [
       <ul class="flex flex-wrap gap-x-5 gap-y-2">
         {legal.map((item) => <li>{item.action ? <button type="button" data-cookie-preferences class="text-left transition hover:text-brand">{item.label}</button> : <a href={localizedPath(lang, item.canonical)} class="transition hover:text-brand">{item.label}</a>}</li>)}
       </ul>
-      <p class="mt-4 text-xs text-ink/45">© {year} {site.fullName}. {t.footer.rights}</p>
     </div>
   </div>
 </footer>
